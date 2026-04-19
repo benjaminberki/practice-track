@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Fable Minimal App
 
 This is a small Fable app project so you can easily get started and add your own code progressively. For more comprehensive templates [check this page](https://fable.io/docs/2-steps/your-first-fable-project.html).
@@ -39,3 +40,7 @@ The sample only contains two F# files: the project (.fsproj) and a source file (
 ### Web assets
 
 The `index.html` file and other assets like an icon can be found in the `public` folder.
+=======
+# practice-track
+A web-based music practice tracker built with F# and Fable, allowing users to log and analyze their practice sessions.
+>>>>>>> 8a604d801f8301e8dfcf3dc9803c43e322dedfa1
