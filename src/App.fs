@@ -14,6 +14,8 @@ if not (isNull root) then
 
     <button id="add">Add session</button>
 
+    <p id="error" style="color:red;"></p>
+
     <ul id="list"></ul>
     """
 
@@ -21,13 +23,31 @@ if not (isNull root) then
     let minutesInput = document.getElementById("minutes") :?> HTMLInputElement
     let addButton = document.getElementById("add") :?> HTMLButtonElement
     let list = document.getElementById("list") :?> HTMLUListElement
+    let error = document.getElementById("error")
 
     addButton.onclick <- fun _ ->
-        let piece = pieceInput.value
-        let minutes = minutesInput.value
+        let piece = pieceInput.value.Trim()
+        let minutes = minutesInput.value.Trim()
 
-        let item = document.createElement("li")
-        item.textContent <- piece + " - " + minutes + " minutes"
+        if piece = "" || minutes = "" then
+            error.textContent <- "Please fill in all fields!"
+        else
+            error.textContent <- ""
 
-        list.appendChild(item) |> ignore
-        
+            let item = document.createElement("li")
+            let text = document.createElement("span")
+            text.textContent <- piece + " - " + minutes + " minutes"
+
+            let deleteBtn = document.createElement("button") :?> HTMLButtonElement
+            deleteBtn.textContent <- "Delete"
+            deleteBtn.setAttribute("style", "margin-left: 10px;")
+
+            deleteBtn.onclick <- fun _ ->
+                list.removeChild(item) |> ignore
+
+            item.appendChild(text) |> ignore
+            item.appendChild(deleteBtn) |> ignore
+            list.appendChild(item) |> ignore
+
+            pieceInput.value <- ""
+            minutesInput.value <- ""
