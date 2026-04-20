@@ -7,8 +7,29 @@ let storageKey = "practiceSessions"
 
 let root = document.getElementById("root")
 
+let updateStats (list: HTMLUListElement) =
+    let stats = document.getElementById("stats")
+    let items = list.getElementsByTagName("li")
+
+    let mutable totalMinutes = 0
+
+    for i in 0 .. items.length - 1 do
+        let item = items.item(i) :?> HTMLLIElement
+        let minutesText = item.getAttribute("data-minutes")
+
+        if not (isNull minutesText) then
+            match System.Int32.TryParse(minutesText) with
+            | true, value -> totalMinutes <- totalMinutes + value
+            | _ -> ()
+
+    stats.textContent <-
+        "Sessions: " + string items.length +
+        " | Total minutes: " + string totalMinutes
+
 let createListItem (list: HTMLUListElement) (piece: string) (minutes: string) =
-    let item = document.createElement("li")
+    let item = document.createElement("li") :?> HTMLLIElement
+    item.setAttribute("data-minutes", minutes)
+
     let text = document.createElement("span")
     text.textContent <- piece + " - " + minutes + " minutes"
 
@@ -20,6 +41,7 @@ let createListItem (list: HTMLUListElement) (piece: string) (minutes: string) =
         list.removeChild(item) |> ignore
         let currentHtml = list.innerHTML
         window.localStorage.setItem(storageKey, currentHtml)
+        updateStats list
 
     item.appendChild(text) |> ignore
     item.appendChild(deleteBtn) |> ignore
@@ -37,6 +59,8 @@ if not (isNull root) then
     <p id="error" style="color:red;"></p>
 
     <ul id="list"></ul>
+
+    <p id="stats">Statistics will appear here</p>
     """
 
     let pieceInput = document.getElementById("piece") :?> HTMLInputElement
@@ -57,6 +81,9 @@ if not (isNull root) then
                 if not (isNull parent) then
                     list.removeChild(parent) |> ignore
                     window.localStorage.setItem(storageKey, list.innerHTML)
+                    updateStats list
+
+    updateStats list
 
     addButton.onclick <- fun _ ->
         let piece = pieceInput.value.Trim()
@@ -71,6 +98,7 @@ if not (isNull root) then
             list.appendChild(item) |> ignore
 
             window.localStorage.setItem(storageKey, list.innerHTML)
+            updateStats list
 
             pieceInput.value <- ""
             minutesInput.value <- ""
