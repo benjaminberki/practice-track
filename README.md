@@ -1,31 +1,70 @@
 # Practice Tracker
 
-A web-based music practice tracker built with F# and Fable.  
-The application allows users to log their daily practice sessions, track total time spent, and manage their progress.
+A web-based practice tracking application built with **F# and Fable**.  
+The application allows users to record, manage, and analyze their practice sessions in a structured and persistent way.
+
+---
 
 ## Motivation
 
-Practicing music regularly requires consistency and tracking.  
-This application helps users keep track of how much time they spend practicing and what pieces they work on.
+Consistent practice is essential in learning music or any skill.  
+This application was designed to help users:
+
+- Track their daily practice sessions
+- Monitor time spent practicing
+- Identify patterns in their learning habits
+
+The project also explores functional programming concepts in a real-world web application.
+
+---
 
 ## Features
 
-- Add practice sessions (piece name + minutes)
-- Delete sessions
-- Persistent storage using browser localStorage
-- Automatic statistics:
-  - Total number of sessions
-  - Total practice time in minutes
+### Session Management
+- Add new practice sessions
+- Store:
+  - Piece title
+  - Practice duration (minutes)
+  - Date
+  - Category (e.g. technique, repertoire)
+- Delete sessions with confirmation
 
-## Technologies Used
+### Persistent Storage
+- Uses **browser localStorage**
+- Sessions remain after page refresh
+- JSON-based data storage
 
-- F#
-- Fable (F# → JavaScript)
-- Webpack
-- HTML/CSS
+### Statistics Dashboard
+Automatically calculated statistics:
+
+- Total practice time
+- Number of sessions
+- Average session length
+- Longest session
+- Most practiced category
+
+### Filtering / Search
+- Filter sessions by:
+  - piece name
+  - category
+- Real-time search
+
+### UI & UX
+- Clean card-based layout
+- Responsive structure
+- Styled using inline CSS
+- Immediate feedback (validation errors)
+
+---
+
+## Technical Highlights
+
+- Functional programming with F#
+- Record types for domain modeling:
+  ```fsharp
+  type PracticeSession = { ... }
 
 ## How to run
 
-```bash
 npm install
 npm start
